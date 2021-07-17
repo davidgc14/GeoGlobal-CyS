@@ -1,0 +1,184 @@
+\documentclass[fleqn]{article}
+
+%\pgfplotsset{compat=1.17}
+
+\usepackage{mathexam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{systeme}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{dsfont} %Numeros reales, naturales...
+\usepackage{cancel}
+\usepackage{hyperref}
+
+
+%\graphicspath{{images/}}
+\newcommand*{\QED}{\hfill\ensuremath{\square}}
+
+
+
+\author{David García Curbelo}
+\title{CyS}
+
+\pagestyle{empty}
+
+
+\def\R{\mathds{R}}
+\def\Z{\mathds{Z}}
+\def\N{\mathds{N}}
+\def\X{\mathbf{X}}
+
+\def\sup{$^2$}
+
+\def\next{\quad \Rightarrow \quad}
+
+\begin{document}
+    \setcounter{page}{1}
+    \pagestyle{plain}
+
+    \begin{center}
+        {\LARGE\bf{Sobre el concepto de Divergencia}} \\
+        {\large\bf{Geometría Global de Curvas y Superficies}}\\
+    \end{center}
+
+    Para considerar de manera correcta la interpretación de divergencia, consideremos primero un campo vectorial, e imaginemos dicho campo como 
+    si representara el movimiento de un fluido (toda la explicación que precede se desarrollará en $\R^2$, y de forma análoga se puede extrapolar a cualquier
+    dimensión finita $\R^n, \thinspace n \in \N$). 
+
+    Consideremos por $\X$ a nuestro campo vectorial, es decir, a una aplicación dada por 
+    $$\X : \R^2 \longrightarrow \R^2$$
+    tal que asocia a cada punto un vector, representando así el movimiento de nuestra partícula por el fluido. Un ejemplo para nuestro campo puede ser 
+    $$\X (x,y) = \left[
+        \begin{matrix}
+        \X_1(x,y)\\
+        \X_2(x,y)
+    \end{matrix} \right]
+    = \left[
+        \begin{matrix}
+        2x-y\\
+        y^2
+    \end{matrix} \right]
+    $$
+    Donde los valores de entrada de $\X$ son como mencionamos los puntos de un espacio de dos dimensiones, $(x, y)$, y los valores de salida son vectores en 
+    dos dimensiones, los cuales están asignados a un correspondiente punto $(x,y)$ en el campo vectorial.
+
+    Una buena manera de imaginarse los campos vectoriales es, como ya comentamos, imaginando el movimiento de un fluido que podrían representar. Específicamente,
+    para cada punto $(x,y)$ en un espacio de dos dimensiones, imaginemos una partícula en el punto $(x,y)$ moviéndose en la dirección del vector asignado a ese 
+    punto: $\X (x,y)$. Más aún, podemos suponer el módulo de este vector (su longitud en el campo vectorial) como la rapidez del movimiento de nuestra partícula
+    en el campo. (Ver Figura 1)
+
+    La curiosidad de estos campos es que, mientras el fluido se mueve, algunas regiones tienden a ser más o menos densas, dependiendo de las características del
+    campo (hacia dónde apunten los vectores). Si por casualidad, en una zona del campo todos los vectores apuntan a nuestro punto $(x,y)$, éste con el tiempo se 
+    volverá más denso, pues en un entorno cercano cada vez tendrá más y más puntos. Y es aquí donde surge la duda: ¿De qué manera podemos medir el cambio en la
+    densidad de las partículas alrededor de un punto $(x,y)$ mientras estas se mueven a lo largo de lso vectores dados por $\X (x,y)$?
+
+    Y es aquí donde toma papel el concepto que veníamos buscando: la {\bf{divergencia}}. La divergencia no es otra cosa que un operador, en el cual tenemos en cada 
+    componente las parciales respecto a cada una de nuestras variables. Ésta se suele denotar por el símbolo de gradiente, $\nabla$, de la siguiente manera
+
+    $$\nabla = \left[
+        \begin{matrix}
+        \frac{\partial}{\partial x}\\
+        \frac{\partial}{\partial y}
+    \end{matrix} \right]$$
+
+    Recuerdo que todas estas definiciones se pueden extrapolar a cualquier dimensión. Considerando ahora la notación del producto, podemos obtener bastante directo
+    lo que andábamos buscando, una función que nos indique la densidad de nuestro campo: la divergencia de nuestro campo. "Multiplicando" el operador $\nabla$ y 
+    nuestro campo, obtenemos la divergencia de nuestro campo vectorial
+
+    $$
+    \nabla * \X = div(\X) = \left[
+        \begin{matrix}
+        \frac{\partial}{\partial x}\\
+        \frac{\partial}{\partial y}
+    \end{matrix} \right]
+    \left[ \X_1, \X_2 \right] = \frac{\partial \X_1}{\partial x} + \frac{\partial \X_2}{\partial y}
+    $$
+
+    Esta notación que hemos usado aquí no es del todo rigurosa, pero da a entender de una manera intuitiva cómo se comporta la divergencia del campo. Retomemos el
+    ejemplo que consideramos al principio de este escrito
+    $$\X (x,y) = \left[
+        \begin{matrix}
+        2x-y\\
+        y^2
+    \end{matrix} \right]
+    $$
+    Su divergencia vendría dada por $div(\X) = \frac{\partial}{\partial x}(2x-y) + \frac{\partial}{\partial y}(y^2) = 2+2y$. Más adelante veremos cómo podemos sacar 
+    conclusiones de hacia dónde evoluciona el campo y, sobre todo, si tiende a ser denso y dónde. Otra manera de entender la fórmula de la divergencia (que a lo mejor
+    te resulta útil) es considerando la divergencia como la traza del jacobiano de nuestro campo vectorial.
+
+    Ahora, supongamos que ya tenemos nuestro campo sobre la mesa y en nuestro lapicero nuestra función divergencia del campo. Tomemos un punto cualquiera de nuestro campo, 
+    digamos por ejemplo el punto $(x_0, y_0)$ y evaluémoslo en nuestra divergencia$div(\X) (x, y)$:
+    
+    \begin{enumerate}
+        \item[] $\quad * \quad div(\X) (x_0, y_0) < 0$. Si la divergencia es negativa en dicho punto, quiere decir que el fluido que se mueve por el campo tenderá a hacerse {\bf{más denso}}
+                en el punto $(x_0, y_0)$. (Ver Figura 2)
+        \item[] $\quad * \quad div(\X) (x_0, y_0) > 0$. De manera análoga al caso anterior, el fluido de partículas que domina en nuestro campo tenderá a dispersarse: hacerse 
+                {\bf{menos denso}} en dicho punto. (Ver Figura 3)
+        \item[] $\quad * \quad div(\X) (x_0, y_0) = 0$. Finalmente tenemos el caso nulo (muy importante en mecánica de fluidos y electrodinámica). Esto indica que, aunque el 
+                fluido se mueve, {\bf{su densidad permanece constante}} a lo largo del tiempo. 
+    \end{enumerate}
+
+    Si consideramos nuestro ejemplo anterior, vemos que la divergencia $div(\X) = 2+2y$ de nuestro campo nos indica que para todo $y>-1$ y cualquiera que sea $x$ en la coordenada
+    de los puntos de nuestro campo, nuestro campo se volverá menos denso, mientras que en el otro semiplano $\left\{(x,y) \thinspace / \thinspace y<-1, \thinspace (x,y) \in \R^2\right\}$ 
+    el campo se vuelve más y más denso a cada instante. A su vez, en la recta $y=-1$ vemos que la densidad del campo se mantiene constante.
+
+    Para poder ver de manera más completa de los ejemplos de divergencia, dejo un alcance de todos unos vídeos sobre divergencia de distintos campos, haciendo click aquí:
+    \url{https://www.youtube.com/watch?v=EpXU3xyVAzo&list=PLKXWoWb0qgQ86VRU20ITYcnaNDJU5EnDn&index=2&ab_channel=3Blue1BrownClips}
+    
+    \newpage
+    \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\linewidth}
+            \includegraphics[width=\linewidth]{campos/campo (1).png}
+            \caption{Instante cero}
+            \label{fig:campo_divergente}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\linewidth}
+            \includegraphics[width=\linewidth]{campos/campo (2).png}
+            \caption{Instante uno}
+            \label{fig:campo_divergente}
+        \end{subfigure}
+        \caption{Ejemplo de campo}
+        \label{fig:campo}
+    \end{figure}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\linewidth}
+            \includegraphics[width=\linewidth]{campos/campo (5).png}
+            \caption{Instante cero}
+            \label{fig:campo_divergente}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\linewidth}
+            \includegraphics[width=\linewidth]{campos/campo (6).png}
+            \caption{Instante uno}
+            \label{fig:campo_divergente}
+        \end{subfigure}
+        \caption{Evolución a un campo más denso}
+        \label{fig:campo}
+    \end{figure}
+
+    \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\linewidth}
+            \includegraphics[width=\linewidth]{campos/campo (3).png}
+            \caption{Instante cero}
+            \label{fig:campo_divergente}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.45\linewidth}
+            \includegraphics[width=\linewidth]{campos/campo (4).png}
+            \caption{Instante uno}
+            \label{fig:campo_divergente}
+        \end{subfigure}
+        \caption{Evolución a un campo menos denso}
+        \label{fig:campo}
+    \end{figure}
+
+
+\end{document}

@@ -1,0 +1,94 @@
+\documentclass[fleqn]{article}
+
+%\pgfplotsset{compat=1.17}
+
+\usepackage{mathexam}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{systeme}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{verbatim} %comentarios de párrafos
+\usepackage{dsfont} %Numeros reales, naturales...
+\usepackage{cancel}
+\usepackage{hyperref}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc} %Indice
+
+
+%\graphicspath{{images/}}
+\newcommand*{\QED}{\hfill\ensuremath{\square}}
+
+
+%Estructura de ecuaciones
+%\setlength{\textwidth}{15cm} \setlength{\oddsidemargin}{5mm}
+%\setlength{\textheight}{23cm} \setlength{\topmargin}{-1cm}
+
+
+\author{David García Curbelo}
+%\title{}
+
+\pagestyle{empty}
+
+
+\def\R{\mathds{R}}
+\def\Z{\mathds{Z}}
+\def\N{\mathds{N}}
+\def\X{\mathbf{X}}
+\def\S{\mathbb{S}}
+
+\def\Jac{\text{Jac}}
+
+\def\next{\quad \Rightarrow \quad}
+
+\def\s{\thinspace}
+
+\def\ss{\thinspace \thinspace}
+
+\begin{document}
+    \setcounter{page}{1}
+    \pagestyle{plain}
+
+    \begin{center}
+        {\LARGE\bf{Examen Final Resuelto}} \\
+        {\large\bf{Geometría Global de Curvas y Superficies}}\\
+    \end{center}
+
+    \textbf{Ejercicio 5. }\textit{Sea $A$ una matriz cuadrada de oren tres regular. Demostrar que la aplicación 
+        $ \phi : \S^2 \rightarrow \S^2 $ dada por 
+        $$\phi (p) = \frac{Ap}{|Ap|}$$
+        es un difeomorfismo. Usar la fórmula del cambio de variables para comprobar que 
+        $$\int_{\S^2} \frac{1}{|Ap|^3} dp = \frac{4\pi}{|\det A|}.$$
+        }
+
+        La aplicación $\phi$ es claramente diferenciable ya que es una restricción de una aplicación definida en $\R^3 - \{0\}$ restringida
+        a $\S^2$. Como la matriz es cuadrada y regular, entonces tiene inversa y podemos definir dicha aplicación como 
+        $\varphi :\S^2 \rightarrow \S^2$ tal que
+        $$\varphi(p) = \frac{A^{-1}p}{|A^{-1}p|}, \quad \quad \forall p \in \S^2$$
+        la cual es la inversa de nuestra función $\phi$, y por el mismo razonamiento que antes vemos que es diferenciable su inversa, y por tanto 
+        $\phi$ es un difeomorfismo. Para terminar, calculemos el valor absoluto del Jacobiano de $\phi$ como sigue. Para ello primero necesitamos
+        $$(d\phi)_p (v) = \frac{Av}{|Ap|} - \frac{\langle Ap, Av \rangle}{|Ap|^3} Ap, \quad \quad \forall v \in T_p\S^2 \s \forall p \in \S^2$$
+        Considerando ahora una base ortonormal de $\R^3$ con $\{e_1, e_2, p\}$, con $e_1, e_2 \in T_p\S^2 \s p \in \S^2$ tenemos el Jacobiano:
+        $$ | \Jac \phi| (p) = \frac{1}{|Ap|^3} |det(Ae_1, Ae_2, Ap)| = \frac{|\det A|}{|Ap|^3}$$
+        Y por tanto tenemos
+        $$\int_{\S^2} | \Jac \phi| (p) = \int_{\S^2} \frac{|\det A|}{|Ap|^3} \next \int_{\S^2} \frac{1}{|Ap|^3} = \int_{\S^2} \frac{| \Jac \phi| (p)}{|\det A|} = \frac{4\pi}{|\det A|}.$$
+
+        \newpage
+
+    \textbf{Ejercicio 6. }\textit{Sea $S$ una superficie compacta con curvatura de Gauss no nula en cada punto y tal que su aplicación de Gauss
+        es inyectiva. Probar que
+        $$\int_S K = 4\pi.$$
+        }
+
+        Notemos en una primera instancia que, como $K \neq 0 \forall p \in S$, no puede haber cambio de signo en dicha curvatura, y como sabemos
+        que la curvatura de Gauss no puede ser siempre no positiva, tenemos que $K>0$. Tomemos ahora la aplicación de Gauss dada por $N: S \rightarrow \S^2$,
+        la cual vemos fácil que es un difeomorfismo local, ya que $K(p)\neq 0$ y $K(p) = \det(dN)_p$, entonces particularmente $\det(dN)_p \neq 0$. Pero además,
+        nuestra aplicación de Gauss lleva abiertos en abiertos, y por tanto $N(S) \subseteq \S^2$ tiene que ser un subconjunto abierto, pero vemos que como $S$
+        es compacto, también tiene que ser cerrado. Por ello, concluimos que $N$ es un difeomorfismo global. Aplicando ahora la fórmula del cambio de variable tenemos
+        $$\int_S |K| = \int_S K = \int_{\S^2} |\Jac N| = A(\S^2) = 4\pi.$$
+\end{document}
